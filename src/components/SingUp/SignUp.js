@@ -34,7 +34,6 @@ const SignUp = () => {
     );
     promise
       .then((response) => {
-        console.log(response.data);
         setIsLoading(false);
         navigate("/");
       })
@@ -51,7 +50,7 @@ const SignUp = () => {
     if (isLoading) {
       return <ThreeDots color="#FFFFFF" />;
     } else {
-      return "Entrar";
+      return "Cadastrar";
     }
   }
 
