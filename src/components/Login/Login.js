@@ -1,13 +1,16 @@
+import UserContext from "../../contexts/UserContext";
 import { Link, useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
+import { ThreeDots } from "react-loader-spinner";
+import axios from "axios";
 import { Main, Container, Input, Button } from "./LoginStyle";
 import logo from "../../assets/img/logo2.png";
-import { useState } from "react";
-import axios from "axios";
-import { ThreeDots } from "react-loader-spinner";
 
 const Login = () => {
   const [inputs, setInputs] = useState({ email: "", password: "" });
   const [isLoading, setIsLoading] = useState(false);
+  const { userData, setUserData } = useContext(UserContext);
+
   const navigate = useNavigate();
 
   function login(e) {
@@ -20,8 +23,14 @@ const Login = () => {
     promise
       .then((response) => {
         setIsLoading(false);
+        setUserData({
+          ...userData,
+          name:  response.data.name,
+          email: response.data.email,
+          image: response.data.image,
+          token: response.data.token,
+        });
         navigate("/hoje");
-        console.log(response.data)
       })
       .catch(() => {
         alert("Erro! Tente novamente.");
