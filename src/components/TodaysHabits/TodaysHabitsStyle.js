@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const Main = styled.main`
-  overflow: hidden;
+  overflow-x: hidden;
+  z-index: 1;
   height: 100vh;
   background-color: #f2f2f2;
   padding: 100px 17px;
