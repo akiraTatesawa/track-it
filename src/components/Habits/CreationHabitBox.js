@@ -7,6 +7,29 @@ import {
   WeekdayButton,
 } from "./HabitsStyle";
 
+const WeekDay = ({ index, day, newHabit, setNewHabit }) => {
+  const [isSelected, setIsSelected] = useState(false);
+  function addDays(e) {
+    if (newHabit.days.some((day) => e.target.id === day)) {
+      const array = newHabit.days.filter((day) => day !== e.target.id);
+      setNewHabit({ ...newHabit, days: array });
+      setIsSelected(false);
+    } else {
+      setNewHabit({ ...newHabit, days: [...newHabit.days, e.target.id] });
+      setIsSelected(true);
+    }
+  }
+  return (
+    <WeekdayButton
+      type="button"
+      id={index}
+      value={day}
+      onClick={addDays}
+      isSelected={isSelected}
+    ></WeekdayButton>
+  );
+};
+
 const CreationHabitBox = ({
   isOpen,
   setIsOpen,
@@ -19,32 +42,15 @@ const CreationHabitBox = ({
   const URL =
     "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
 
-  const WeekDay = ({ index, day }) => {
-    const [isSelected, setIsSelected] = useState(false);
-    function addDays(e) {
-      if (newHabit.days.some((day) => e.target.id === day)) {
-        const array = newHabit.days.filter((day) => day !== e.target.id);
-        setNewHabit({ ...newHabit, days: array });
-        setIsSelected(false);
-      } else {
-        setNewHabit({ ...newHabit, days: [...newHabit.days, e.target.id] });
-        setIsSelected(true);
-      }
-    }
-    return (
-      <WeekdayButton
-        type="button"
-        id={index}
-        value={day}
-        onClick={addDays}
-        isSelected={isSelected}
-      ></WeekdayButton>
-    );
-  };
-
   const mountWeekdays = () => {
     const weekdays = weekdaysArray.map((day, index) => (
-      <WeekDay index={index} key={index} day={day} />
+      <WeekDay
+        index={index}
+        key={index}
+        day={day}
+        setNewHabit={setNewHabit}
+        newHabit={newHabit}
+      />
     ));
     return weekdays;
   };
