@@ -13,6 +13,8 @@ const SignUp = () => {
     password: "",
   });
   const [isLoading, setIsLoading] = useState(false);
+  const URL_SIGNUP =
+    "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up";
   const navigate = useNavigate();
 
   function handleError(error) {
@@ -28,12 +30,9 @@ const SignUp = () => {
   function registerUser(e) {
     e.preventDefault();
     setIsLoading(true);
-    const promise = axios.post(
-      "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up",
-      inputs
-    );
+    const promise = axios.post(URL_SIGNUP, inputs);
     promise
-      .then((response) => {
+      .then(() => {
         setIsLoading(false);
         navigate("/");
       })

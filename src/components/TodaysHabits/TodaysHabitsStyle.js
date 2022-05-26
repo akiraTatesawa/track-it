@@ -9,6 +9,9 @@ export const Main = styled.main`
 `;
 
 export const Section = styled.section`
+  display: flex;
+  flex-direction: column;
+
   h2 {
     color: #126ba5;
     font-size: 23px;

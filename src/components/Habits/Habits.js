@@ -1,5 +1,7 @@
 import { Main, Section, TitleHabits, HabitsList } from "./HabitsStyle";
 import { useState, useEffect, useContext } from "react";
+import { BsPlusSquareFill } from "react-icons/bs";
+import { IconContext } from "react-icons";
 import axios from "axios";
 import UserContext from "../../contexts/UserContext";
 import CreationHabitBox from "./CreationHabitBox";
@@ -16,7 +18,7 @@ const Habits = () => {
 
   useEffect(() => {
     reloadUserHabits();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function reloadUserHabits() {
@@ -66,7 +68,9 @@ const Habits = () => {
         <TitleHabits>
           <h2>Meus hábitos</h2>
           <button type="button" onClick={() => setIsOpen(true)}>
-            +
+            <IconContext.Provider value={{size: "30", color: "#52b6ff"}}>
+              <BsPlusSquareFill />
+            </IconContext.Provider>
           </button>
         </TitleHabits>
         <HabitsList>

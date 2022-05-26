@@ -10,22 +10,21 @@ const Login = () => {
   const [inputs, setInputs] = useState({ email: "", password: "" });
   const [isLoading, setIsLoading] = useState(false);
   const { userData, setUserData } = useContext(UserContext);
+  const URL_LOGIN =
+    "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login";
 
   const navigate = useNavigate();
 
   function login(e) {
     e.preventDefault();
     setIsLoading(true);
-    const promise = axios.post(
-      "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",
-      inputs
-    );
+    const promise = axios.post(URL_LOGIN, inputs);
     promise
       .then((response) => {
         setIsLoading(false);
         setUserData({
           ...userData,
-          name:  response.data.name,
+          name: response.data.name,
           email: response.data.email,
           image: response.data.image,
           token: response.data.token,

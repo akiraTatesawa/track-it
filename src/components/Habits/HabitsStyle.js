@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+ 
 export const Main = styled.main`
   overflow-x: hidden;
   z-index: 1;
@@ -24,17 +24,14 @@ export const TitleHabits = styled.section`
   }
 
   button {
-    width: 40px;
-    height: 35px;
-    background-color: #52b6ff;
-    border: none;
-    border-radius: 5px;
-    color: #ffffff;
-    font-size: 27px;
+    width: 30px;
+    height: 30px;
     padding: 0;
-    text-align: center;
-    line-height: 35px;
+    margin: 0;
+    border: none;
+    background-color: #ffffff;
   }
+
 `;
 
 export const HabitsList = styled.div`
@@ -48,7 +45,7 @@ export const HabitsList = styled.div`
 `;
 
 export const HabitCreationBox = styled.div`
-  display: ${props => props.isOpen ? "block" : "none"};
+  display: ${(props) => (props.isOpen ? "block" : "none")};
   width: 100%;
   height: 180px;
   background-color: #ffffff;
@@ -117,7 +114,7 @@ export const CancelButton = styled.input`
   line-height: 35px;
 `;
 
-export const SubmitButton = styled.input`
+export const SubmitButton = styled.button`
   position: absolute;
   display: inline-block;
   right: 0;
@@ -132,6 +129,13 @@ export const SubmitButton = styled.input`
   text-align: center;
   padding: 0;
   line-height: 35px;
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
 `;
 
 export const HabitContainer = styled.div`
@@ -150,6 +154,8 @@ export const HabitContainer = styled.div`
     font-size: 20px;
     color: #666666;
     margin-bottom: 12px;
+    word-wrap: break-word;
+    padding-right: 15px;
   }
 
   .trash-icon {

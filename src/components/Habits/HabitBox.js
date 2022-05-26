@@ -55,18 +55,20 @@ const HabitBox = ({ habitId, habitName, habitDays, reload }) => {
   }
 
   function deleteHabit() {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userData.token}`,
-      },
-    };
-    const promise = axios.delete(URL_DELETE, config);
-    promise
-      .then(() => reload())
-      .catch(() => {
-        alert("Erro ao deletar o hábito tente novamente!");
-        reload();
-      });
+    if (window.confirm("Deseja mesmo excluir esse hábito?")) {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userData.token}`,
+        },
+      };
+      const promise = axios.delete(URL_DELETE, config);
+      promise
+        .then(() => reload())
+        .catch(() => {
+          alert("Erro ao deletar o hábito tente novamente!");
+          reload();
+        });
+    }
   }
 
   const weekdays = renderWeekdays();
