@@ -1,5 +1,5 @@
 import styled from "styled-components";
- 
+
 export const Main = styled.main`
   overflow-x: hidden;
   z-index: 1;
@@ -31,7 +31,6 @@ export const TitleHabits = styled.section`
     border: none;
     background-color: #ffffff;
   }
-
 `;
 
 export const HabitsList = styled.div`
@@ -130,15 +129,19 @@ export const SubmitButton = styled.button`
   padding: 0;
   line-height: 35px;
 
+  &:disabled {
+    background-color: ${(props) => (props.isLoading ? "#52b6ff" : "#d5dde3")};
+  }
+
   div {
     display: flex;
     align-items: center;
     justify-content: center;
   }
-
 `;
 
 export const HabitContainer = styled.div`
+  display: ${(props) => (props.isDeleted ? "none" : "block")};
   width: 100%;
   min-height: 91px;
   background-color: #ffffff;

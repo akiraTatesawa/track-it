@@ -46,12 +46,14 @@ const App = () => {
       <GlobalStyle />
       <UserContext.Provider value={{ userData, setUserData, completedHabits, setCompletedHabits }}>
         {header}
+
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/cadastro" element={<SignUp />} />
           <Route path="/hoje" element={<TodaysHabits />} />
           <Route path="/habitos" element={<Habits />} />
         </Routes>
+        
         {footer}
       </UserContext.Provider>
     </Fragment>

@@ -1,52 +1,8 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
-
-import {
-  CancelButton,
-  HabitCreationBox,
-  SubmitButton,
-  WeekdayButton,
-} from "./HabitsStyle";
-
-const WeekDay = ({ index, day, newHabit, setNewHabit, isLoading, reset, setReset }) => {
-  const [isSelected, setIsSelected] = useState(false);
-
-  function addDays(e) {
-    if (newHabit.days.some((day) => e.target.id === day)) {
-      const array = newHabit.days.filter((day) => day !== e.target.id);
-      setNewHabit({ ...newHabit, days: array });
-      setIsSelected(false);
-    } else {
-      setNewHabit({ ...newHabit, days: [...newHabit.days, e.target.id] });
-      setIsSelected(true);
-    }
-  }
-
-  function checkReset() {
-    if (reset) {
-      setIsSelected(false);
-    }
-    setReset(false)
-  }
-
-  useEffect(() => {
-    checkReset();
-    console.log("Rodei o effect")
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reset])
-
-  return (
-    <WeekdayButton
-      type="button"
-      id={index}
-      value={day}
-      onClick={addDays}
-      isSelected={isSelected}
-      disabled={isLoading}
-    ></WeekdayButton>
-  );
-};
+import { CancelButton, HabitCreationBox, SubmitButton } from "./HabitsStyle";
+import WeekDay from "./WeekDay";
 
 const CreationHabitBox = ({
   isOpen,
@@ -56,10 +12,17 @@ const CreationHabitBox = ({
   token,
   reload,
 }) => {
-  const weekdaysArray = ["D", "S", "T", "Q", "Q", "S", "S"];
+  const standardWeekdays = [
+    { day: "D", id: 0, isSelected: false },
+    { day: "S", id: 1, isSelected: false },
+    { day: "T", id: 2, isSelected: false },
+    { day: "Q", id: 3, isSelected: false },
+    { day: "Q", id: 4, isSelected: false },
+    { day: "S", id: 5, isSelected: false },
+    { day: "S", id: 6, isSelected: false },
+  ];
+  const [weekdaysArray, setWeekdaysArray] = useState(standardWeekdays);
   const [isLoading, setIsLoading] = useState(false);
-  const [reset, setReset] = useState(false)
-
   const URL =
     "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
 
@@ -78,13 +41,14 @@ const CreationHabitBox = ({
           Authorization: `Bearer ${token}`,
         },
       };
+      console.log(token, config);
       const promise = axios.post(URL, newHabit, config);
       promise
         .then(() => {
           setIsLoading(false);
           setIsOpen(false);
-          setReset(true);
           setNewHabit({ ...newHabit, name: "", days: [] });
+          setWeekdaysArray(standardWeekdays);
           reload();
         })
         .catch(() => {
@@ -96,16 +60,17 @@ const CreationHabitBox = ({
   }
 
   function mountWeekdays() {
-    const weekdays = weekdaysArray.map((day, index) => (
+    const weekdays = weekdaysArray.map(({ day, isSelected, id }, index) => (
       <WeekDay
-        index={index}
         key={index}
         day={day}
+        id={id}
+        isSelected={isSelected}
         setNewHabit={setNewHabit}
         newHabit={newHabit}
+        setWeekdaysArray={setWeekdaysArray}
+        weekdaysArray={weekdaysArray}
         isLoading={isLoading}
-        reset={reset}
-        setReset={setReset}
       />
     ));
     return weekdays;
@@ -143,10 +108,11 @@ const CreationHabitBox = ({
         <CancelButton
           type="button"
           value="Cancelar"
+          disabled={isLoading}
           onClick={() => setIsOpen(false)}
         ></CancelButton>
 
-        <SubmitButton type="submit" disabled={isLoading}>
+        <SubmitButton type="submit" isLoading={isLoading} disabled={isLoading || newHabit.days.length === 0}>
           {buttonContent}
         </SubmitButton>
       </form>

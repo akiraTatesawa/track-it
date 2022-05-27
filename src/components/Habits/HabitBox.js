@@ -36,7 +36,7 @@ const Weekday = ({ id, habitDays }) => {
       weekdayChar = "S";
       break;
     default:
-      weekdayChar = "deu ruim";
+      weekdayChar = "!";
   }
   return (
     <WeekdayListItem isSelected={isSelected}>{weekdayChar}</WeekdayListItem>

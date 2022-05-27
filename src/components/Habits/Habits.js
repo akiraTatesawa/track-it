@@ -61,7 +61,7 @@ const Habits = () => {
   }
 
   const userHabitsList = renderUserHabitsList();
-  console.log(newHabit);
+  
   return (
     <Main>
       <Section>
