@@ -7,6 +7,7 @@ import { useContext } from "react";
 
 const Footer = () => {
   const { habits } = useContext(UserContext);
+  const { ratio } = habits;
 
   return (
     <FooterContainer>
@@ -16,7 +17,7 @@ const Footer = () => {
       <div>
         <Link to="/hoje" title={"Hoje"}>
           <CircularProgressbar
-            value={Math.round(habits.ratio * 100)}
+            value={Math.round(ratio * 100)}
             text={"Hoje"}
             background
             backgroundPadding={6}
@@ -29,8 +30,9 @@ const Footer = () => {
           />
         </Link>
       </div>
-
-      <span>Histórico</span>
+      <Link to="/historico" title={"Histórico"}>
+        <span>Histórico</span>
+      </Link>
     </FooterContainer>
   );
 };

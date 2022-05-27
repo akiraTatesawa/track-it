@@ -4,6 +4,7 @@ const GlobalStyle = createGlobalStyle`
   *{
     box-sizing: border-box;
     font-family: 'Lexend Deca', sans-serif;
+    -webkit-tap-highlight-color: transparent;
   }
 
   body {
@@ -19,7 +20,6 @@ const GlobalStyle = createGlobalStyle`
 
   a {
     text-decoration: none;
-    -webkit-tap-highlight-color: transparent;
   }
 
 `;

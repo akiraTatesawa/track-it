@@ -15,31 +15,28 @@ import TodayHabitBox from "./TodayHabitBox";
 
 const TodaysHabits = () => {
   const { userData, habits, setHabits } = useContext(UserContext);
-  const [completedHabits, setCompletedHabits] = useState(0);
   const [todaysHabits, setTodaysHabits] = useState([]);
   const URL_TODAY =
     "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today";
 
   function renderHabitsProgression() {
-    const habitsRatio = Math.round(
-      (completedHabits / todaysHabits.length) * 100
-    );
-    if (completedHabits === 0) {
+    if (todaysHabits.length !== 0 && habits.completed !== 0) {
+      const { ratio } = habits;
+      return (
+        <HabitsProgression status={true}>
+          {Math.round(ratio * 100)}% dos hábitos concluídos
+        </HabitsProgression>
+      );
+    } else {
       return (
         <HabitsProgression status={false}>
           Nenhum hábito concluído ainda
         </HabitsProgression>
       );
-    } else {
-      return (
-        <HabitsProgression status={true}>
-          {habitsRatio}% dos hábitos concluídos
-        </HabitsProgression>
-      );
     }
   }
 
-  function reloadTodaysHabits() {
+  function reloadTodaysHabits(firstLoadPage) {
     const config = {
       headers: {
         Authorization: `Bearer ${userData.token}`,
@@ -49,12 +46,16 @@ const TodaysHabits = () => {
     promise
       .then((res) => {
         setTodaysHabits(res.data);
-        let doneCont = 0;
-        setCompletedHabits(() => {
+        if (firstLoadPage) {
+          let doneCont = 0;
           res.data.map((item) => (item.done ? doneCont++ : doneCont));
-          return doneCont;
-        });
-        setHabits({...habits, completed: doneCont, total: res.data.length, ratio: doneCont/res.data.length});
+          setHabits({
+            ...habits,
+            completed: doneCont,
+            total: res.data.length,
+            ratio: doneCont / res.data.length,
+          });
+        }
       })
       .catch((err) => console.log(err));
   }
@@ -67,8 +68,6 @@ const TodaysHabits = () => {
             key={id}
             id={id}
             title={name}
-            completedHabits={completedHabits}
-            setCompletedHabits={setCompletedHabits}
             done={done}
             currentSequence={currentSequence}
             highestSequence={highestSequence}
@@ -87,11 +86,9 @@ const TodaysHabits = () => {
   }
 
   useEffect(() => {
-    reloadTodaysHabits();
+    reloadTodaysHabits(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  console.log(habits)
 
   return (
     <Main>

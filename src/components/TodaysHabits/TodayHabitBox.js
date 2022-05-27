@@ -15,8 +15,6 @@ const TodayHabitBox = ({
   done,
   currentSequence,
   highestSequence,
-  setCompletedHabits,
-  completedHabits,
   reload,
 }) => {
   const [habitData, setHabitData] = useState({
@@ -42,8 +40,13 @@ const TodayHabitBox = ({
   function checkHabit() {
     const URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`;
     const promise = axios.post(URL, {}, config);
-    promise.then(() => reload()).catch((err) => console.log(err.response));
-    setCompletedHabits(completedHabits + 1);
+    let newHighestSequence = habitData.highestSequence;
+
+    if (habitData.currentSequence + 1 === habitData.highestSequence + 1) {
+      newHighestSequence = habitData.highestSequence + 1;
+    }
+
+    promise.then(() => reload(false)).catch((err) => console.log(err.response));
     setHabits({
       ...habits,
       completed: habits.completed + 1,
@@ -53,14 +56,20 @@ const TodayHabitBox = ({
       ...habitData,
       done: true,
       currentSequence: habitData.currentSequence + 1,
+      highestSequence: newHighestSequence
     });
   }
 
   function uncheckHabit() {
     const URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`;
     const promise = axios.post(URL, {}, config);
-    promise.then(() => reload()).catch((err) => console.log(err.response));
-    setCompletedHabits(completedHabits - 1);
+    let newHighestSequence = habitData.highestSequence;
+
+    if (habitData.currentSequence - 1 === habitData.highestSequence - 1) {
+      newHighestSequence = habitData.highestSequence - 1;
+    }
+
+    promise.then(() => reload(false)).catch((err) => console.log(err.response));
     setHabits({
       ...habits,
       completed: habits.completed - 1,
@@ -70,6 +79,7 @@ const TodayHabitBox = ({
       ...habitData,
       done: false,
       currentSequence: habitData.currentSequence - 1,
+      highestSequence: newHighestSequence
     });
   }
 
@@ -90,10 +100,10 @@ const TodayHabitBox = ({
       currentSeqText = ` ${habitData.currentSequence} dias`;
     }
 
-    if (highestSequence <= 1) {
-      highestSeqText = ` ${highestSequence} dia`;
+    if (habitData.highestSequence <= 1) {
+      highestSeqText = ` ${habitData.highestSequence} dia`;
     } else {
-      highestSeqText = ` ${highestSequence} dias`;
+      highestSeqText = ` ${habitData.highestSequence} dias`;
     }
 
     return (
@@ -108,8 +118,8 @@ const TodayHabitBox = ({
           Seu recorde:
           <HighestSequence
             isEqual={
-              habitData.currentSequence === highestSequence &&
-              highestSequence !== 0 &&
+              habitData.currentSequence === habitData.highestSequence &&
+              habitData.highestSequence !== 0 &&
               habitData.done
             }
           >

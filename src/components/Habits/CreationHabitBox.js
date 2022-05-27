@@ -41,7 +41,6 @@ const CreationHabitBox = ({
           Authorization: `Bearer ${token}`,
         },
       };
-      console.log(token, config);
       const promise = axios.post(URL, newHabit, config);
       promise
         .then(() => {

@@ -9,6 +9,7 @@ import Login from "./Login/Login";
 import SignUp from "./SingUp/SignUp";
 import TodaysHabits from "./TodaysHabits/TodaysHabits";
 import Habits from "./Habits/Habits";
+import History from "./HabitsHistory/History";
 import Header from "./shared-components/Header";
 import Footer from "./shared-components/Footer"
 
@@ -52,6 +53,7 @@ const App = () => {
           <Route path="/cadastro" element={<SignUp />} />
           <Route path="/hoje" element={<TodaysHabits />} />
           <Route path="/habitos" element={<Habits />} />
+          <Route path="/historico" element={ <History /> } />
         </Routes>
         
         {footer}

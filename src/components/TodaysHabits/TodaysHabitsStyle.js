@@ -5,7 +5,7 @@ export const Main = styled.main`
   z-index: 1;
   height: 100vh;
   background-color: #f2f2f2;
-  padding: 100px 17px;
+  padding: 100px 17px 120px 17px;
 `;
 
 export const Title = styled.div`
