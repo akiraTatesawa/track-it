@@ -69,7 +69,7 @@ const Habits = () => {
           <h2>Meus hábitos</h2>
           <button type="button" onClick={() => setIsOpen(true)}>
             <IconContext.Provider value={{size: "30", color: "#52b6ff"}}>
-              <BsPlusSquareFill />
+              <BsPlusSquareFill title={"Adicionar hábito"} />
             </IconContext.Provider>
           </button>
         </TitleHabits>

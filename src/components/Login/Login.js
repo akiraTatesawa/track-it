@@ -71,9 +71,9 @@ const Login = () => {
             required
             disabled={isLoading}
           />
-          <Button type="submit">{buttonContent}</Button>
+          <Button type="submit" title={"Entrar"}>{buttonContent}</Button>
           <Link to="/cadastro">
-            <p>Não tem uma conta? Cadastre-se!</p>
+            <p title={"Cadastre-se"}>Não tem uma conta? Cadastre-se!</p>
           </Link>
         </form>
       </Container>

@@ -78,7 +78,7 @@ const HabitBox = ({ habitId, habitName, habitDays, reload }) => {
       <div>
         <h3>{habitName}</h3>
         <IconContext.Provider value={{ className: "trash-icon" }}>
-          <BsTrash onClick={deleteHabit} />
+          <BsTrash onClick={deleteHabit} title={"Deletar"} />
         </IconContext.Provider>
         <ul>{weekdays}</ul>
       </div>

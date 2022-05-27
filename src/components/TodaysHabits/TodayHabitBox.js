@@ -24,7 +24,7 @@ const TodayHabitBox = ({
     currentSequence: currentSequence,
     highestSequence: highestSequence,
   });
-  const { userData } = useContext(UserContext);
+  const { userData, setHabits, habits } = useContext(UserContext);
   const config = {
     headers: {
       Authorization: `Bearer ${userData.token}`,
@@ -44,6 +44,11 @@ const TodayHabitBox = ({
     const promise = axios.post(URL, {}, config);
     promise.then(() => reload()).catch((err) => console.log(err.response));
     setCompletedHabits(completedHabits + 1);
+    setHabits({
+      ...habits,
+      completed: habits.completed + 1,
+      ratio: (habits.completed+1) / habits.total,
+    });
     setHabitData({
       ...habitData,
       done: true,
@@ -56,6 +61,11 @@ const TodayHabitBox = ({
     const promise = axios.post(URL, {}, config);
     promise.then(() => reload()).catch((err) => console.log(err.response));
     setCompletedHabits(completedHabits - 1);
+    setHabits({
+      ...habits,
+      completed: habits.completed - 1,
+      ratio: (habits.completed-1) / habits.total,
+    });
     setHabitData({
       ...habitData,
       done: false,
@@ -99,7 +109,8 @@ const TodayHabitBox = ({
           <HighestSequence
             isEqual={
               habitData.currentSequence === highestSequence &&
-              highestSequence !== 0
+              highestSequence !== 0 &&
+              habitData.done
             }
           >
             {highestSeqText}
@@ -112,12 +123,14 @@ const TodayHabitBox = ({
   return (
     <TodaysHabitBox>
       <div>
-        <h3>{title}</h3>
-        {renderHabitSequences()}
+        <div>
+          <h3>{title}</h3>
+          {renderHabitSequences()}
+        </div>
+        <IconContext.Provider value={{ color: changeColor(), size: 69 }}>
+          <ImCheckboxChecked onClick={handleClick} />
+        </IconContext.Provider>
       </div>
-      <IconContext.Provider value={{ color: changeColor(), size: "69" }}>
-        <ImCheckboxChecked onClick={handleClick} />
-      </IconContext.Provider>
     </TodaysHabitBox>
   );
 };

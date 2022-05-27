@@ -19,7 +19,7 @@ const App = () => {
     image: "",
     token: "",
   });
-  const [completedHabits, setCompletedHabits] = useState(0);
+  const [habits, setHabits] = useState({completed: 0, total: 0, ratio: 0});
   const location = useLocation();
 
   function renderHeader() {
@@ -44,7 +44,7 @@ const App = () => {
   return (
     <Fragment>
       <GlobalStyle />
-      <UserContext.Provider value={{ userData, setUserData, completedHabits, setCompletedHabits }}>
+      <UserContext.Provider value={{ userData, setUserData, habits, setHabits }}>
         {header}
 
         <Routes>

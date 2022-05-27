@@ -97,6 +97,7 @@ const CreationHabitBox = ({
         <input
           type="text"
           placeholder="nome do hábito"
+          maxLength={20}
           value={newHabit.name || ""}
           onChange={registerHabitsName}
           disabled={isLoading}
@@ -110,9 +111,10 @@ const CreationHabitBox = ({
           value="Cancelar"
           disabled={isLoading}
           onClick={() => setIsOpen(false)}
+          title={"Cancelar"}
         ></CancelButton>
 
-        <SubmitButton type="submit" isLoading={isLoading} disabled={isLoading || newHabit.days.length === 0}>
+        <SubmitButton type="submit" isLoading={isLoading} disabled={isLoading || newHabit.days.length === 0} title={"Enviar"} >
           {buttonContent}
         </SubmitButton>
       </form>

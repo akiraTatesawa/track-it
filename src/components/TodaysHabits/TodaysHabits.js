@@ -1,6 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import UserContext from "../../contexts/UserContext";
 import axios from "axios";
+import dayjs from "dayjs";
+import "dayjs/locale/pt-br";
+
 import {
   Main,
   Title,
@@ -11,7 +14,7 @@ import {
 import TodayHabitBox from "./TodayHabitBox";
 
 const TodaysHabits = () => {
-  const { userData } = useContext(UserContext);
+  const { userData, habits, setHabits } = useContext(UserContext);
   const [completedHabits, setCompletedHabits] = useState(0);
   const [todaysHabits, setTodaysHabits] = useState([]);
   const URL_TODAY =
@@ -21,7 +24,6 @@ const TodaysHabits = () => {
     const habitsRatio = Math.round(
       (completedHabits / todaysHabits.length) * 100
     );
-
     if (completedHabits === 0) {
       return (
         <HabitsProgression status={false}>
@@ -47,11 +49,12 @@ const TodaysHabits = () => {
     promise
       .then((res) => {
         setTodaysHabits(res.data);
+        let doneCont = 0;
         setCompletedHabits(() => {
-          let aux = 0;
-          res.data.map((item) => (item.done ? aux++ : aux));
-          return aux;
+          res.data.map((item) => (item.done ? doneCont++ : doneCont));
+          return doneCont;
         });
+        setHabits({...habits, completed: doneCont, total: res.data.length, ratio: doneCont/res.data.length});
       })
       .catch((err) => console.log(err));
   }
@@ -76,15 +79,24 @@ const TodaysHabits = () => {
     }
   }
 
+  function setTodaysDate() {
+    const todaysDate = `${dayjs()
+      .locale("pt-br")
+      .format("dddd")}, ${dayjs().format("DD/MM")}`;
+    return todaysDate.charAt(0).toUpperCase() + todaysDate.slice(1);
+  }
+
   useEffect(() => {
     reloadTodaysHabits();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  console.log(habits)
+
   return (
     <Main>
       <Title>
-        <h2>Segunda, 17/05</h2>
+        <h2>{setTodaysDate()}</h2>
         {renderHabitsProgression()}
       </Title>
       <TodaysHabitsSection>{mountTodaysHabits()}</TodaysHabitsSection>

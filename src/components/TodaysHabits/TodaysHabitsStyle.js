@@ -34,6 +34,7 @@ export const TodaysHabitBox = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
+  --100: 100%;
   min-height: 95px;
   background-color: #ffffff;
   border-radius: 5px;
@@ -41,16 +42,37 @@ export const TodaysHabitBox = styled.div`
   margin-bottom: 10px;
   color: #666666;
 
+  > div {
+    width: 100%;
+    position: relative;
+  }
+
+  div > div {
+    width: calc(var(--100)/1.5);
+  }
+
   h3 {
-    font-size: 20px;
+    font-size: 19px;
+    line-height: 25px;
     margin-bottom: 9px;
+    word-wrap: break-word;
   }
 
   p {
     font-size: 13px;
     line-height: 16px;
   }
+
+  svg {
+    height: 100%;
+    margin-left: 10px;
+    position: absolute;
+    right: 0;
+    top:0;
+  }
 `;
+
+
 
 export const CurrentSequence = styled.span`
   font-size: 13px;

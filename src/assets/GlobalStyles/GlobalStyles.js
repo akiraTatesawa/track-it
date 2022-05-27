@@ -12,6 +12,16 @@ const GlobalStyle = createGlobalStyle`
     background-color: #FFFFFF;
     font-family: 'Lexend Deca', sans-serif;
   }
+
+  button, svg, input[type="button"] {
+    cursor: pointer;
+  }
+
+  a {
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
 `;
 
 export default GlobalStyle;

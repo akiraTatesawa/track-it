@@ -96,10 +96,10 @@ const SignUp = () => {
             required
             disabled={isLoading}
           />
-          <Button type="submit">{buttonContent}</Button>
+          <Button type="submit" title={"Cadastrar"}>{buttonContent}</Button>
         </form>
         <Link to="/">
-          <p>Já tem uma conta? Faça login!</p>
+          <p title={"Faça login"} >Já tem uma conta? Faça login!</p>
         </Link>
       </Container>
     </Main>
