@@ -3,13 +3,15 @@ import styled from "styled-components";
 import UserContext from "../../contexts/UserContext";
 import { useContext } from "react";
 
+import questionMark from "../../assets/img/questionmark_user_profile.jpg";
+
 const Header = () => {
   const { userData } = useContext(UserContext);
 
   return (
     <HeaderContainer>
       <h1>TrackIt</h1>
-      <img src={userData.image} alt="User profile" />
+      <img src={userData.image ? userData.image : questionMark} alt="User profile" />
     </HeaderContainer>
   );
 };

@@ -9,7 +9,7 @@ import logo from "../../assets/img/logo2.png";
 const Login = () => {
   const [inputs, setInputs] = useState({ email: "", password: "" });
   const [isLoading, setIsLoading] = useState(false);
-  const { userData, setUserData } = useContext(UserContext);
+  const { setUserData } = useContext(UserContext);
   const URL_LOGIN =
     "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login";
 
@@ -22,13 +22,13 @@ const Login = () => {
     promise
       .then((response) => {
         setIsLoading(false);
-        setUserData({
-          ...userData,
-          name: response.data.name,
-          email: response.data.email,
-          image: response.data.image,
-          token: response.data.token,
-        });
+
+        const { data } = response;
+        const user = { name: data.name, email: data.email, image: data.image, token: data.token }
+
+        localStorage.setItem("userData", JSON.stringify(user));
+        setUserData(user);
+
         navigate("/hoje");
       })
       .catch(() => {
